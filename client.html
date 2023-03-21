@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </head>
+    <body>
+        <button id="create_socket_connection">CONNECT</button>
+        <button id="socket_disconnect">DISCONNECT</button>
+        <button id="send_message">Send event</button>
+        <script>
+            var socket = null;
+
+            $( "#create_socket_connection" ).click(function() {
+                socket = new io(
+                    'ws://localhost:5000', {
+                        query: {
+                            token: 'XXX'
+                        }
+                    }
+                );
+                socket.connect();
+
+                socket.on("connect", () => {
+                    console.log('\r\n*** Connected to API ***\r\n');
+                });
+
+                socket.on("message", (data) => {
+                    console.log('data', data);
+                });
+
+
+                socket.on("disconnect", () => {
+                    socket = null
+                    console.log('\r\n*** Disconnected from API ***\r\n');
+                })
+            });
+
+            $("#socket_disconnect").click(() => {
+                socket.disconnect();
+            })
+
+            $("#send_message").click(() => {
+                // socket.emit("notification", "all")
+                if (socket) {
+                    socket.send("Hello")
+                }
+            })
+        </script>
+    </body>
+</html>
