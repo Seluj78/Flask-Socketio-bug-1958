@@ -25,7 +25,7 @@ def on_connect():
     # Mocked use auth for testing purposes
     if token != "TOKEN":
         logging.info("User tried to connect with expired token.")
-        return False
+        # return False
         raise ConnectionRefusedError("JWT access token has expired.")
 
     user_id = 1

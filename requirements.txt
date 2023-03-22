@@ -1,3 +1,4 @@
 flask
-flask-socketio
 simple-websocket
+-e git+https://github.com/miguelgrinberg/flask-SocketIO@main#egg=flask-socketio
+-e git+https://github.com/miguelgrinberg/python-engineio@main#egg=python-engineio
